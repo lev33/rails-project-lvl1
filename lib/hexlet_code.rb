@@ -4,14 +4,15 @@ require_relative "hexlet_code/version"
 
 module HexletCode
   class Error < StandardError; end
-  # Your code goes here...
+
+  # documentation comment
   class Tag
     def self.build(name, **attributes)
       attributes = attributes.map do |key, value|
         %( #{key}='#{value}')
       end.join
-      
-      if %w(br img input).include?(name)
+
+      if %w[br img input].include?(name)
         %(<#{name}#{attributes}>)
       elsif block_given?
         %(<#{name}#{attributes}>#{yield}</#{name}>)
