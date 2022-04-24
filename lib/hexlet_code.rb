@@ -2,8 +2,13 @@
 
 require_relative "hexlet_code/version"
 
+# module
 module HexletCode
   class Error < StandardError; end
+
+  def self.form_for(_user, url: "#")
+    Tag.build("form", action: url, method: "post") {}
+  end
 
   # documentation comment
   class Tag
