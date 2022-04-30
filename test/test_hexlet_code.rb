@@ -18,6 +18,7 @@ class TestHexletCode < Minitest::Test
       f.input :name
       # Проверяет есть ли значение внутри job
       f.input :job, as: :text
+      f.submit
     end
     pp result
     assert expected == result

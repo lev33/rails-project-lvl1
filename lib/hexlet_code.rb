@@ -14,9 +14,11 @@ module HexletCode
       when :text
         Tag.build("label", for: el[:name]) { el[:name].capitalize } +
           Tag.build("textarea", cols: "20", rows: "40", name: el[:name]) { el[:value] }
-      else
+      when :string
         Tag.build("label", for: el[:name]) { el[:name].capitalize } +
           Tag.build("input", name: el[:name], type: "text", value: el[:value])
+      when :submit
+        Tag.build("input", name: el[:name], type: "submit", value: el[:value])
       end
     end.join
 
@@ -36,6 +38,10 @@ module HexletCode
       value = user.send name
       type = attributes[:as] || :string
       @html << { name: name, attributes: attributes.except(:as), type: type, value: value }
+    end
+
+    def submit(value = "Save", **attributes)
+      @html << { name: :commit, attributes: attributes, type: :submit, value: value }
     end
   end
 
