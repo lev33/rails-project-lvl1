@@ -12,19 +12,21 @@ module HexletCode
   def self.form_for(user, url: "#")
     form = Form.new(user)
     yield form
-    inner = form.html.map do |el|
-      case el[:type]
-      when :text
-        Tag.build("label", for: el[:name]) { el[:name].capitalize } +
-          Tag.build("textarea", cols: "20", rows: "40", name: el[:name]) { el[:value] }
-      when :string
-        Tag.build("label", for: el[:name]) { el[:name].capitalize } +
-          Tag.build("input", name: el[:name], type: "text", value: el[:value])
-      when :submit
-        Tag.build("input", name: el[:name], type: "submit", value: el[:value])
-      end
+    inner = form.html.map do |item|
+      render(item)
     end.join
-
     Tag.build("form", action: url, method: "post") { inner }
+  end
+
+  def self.render(item)
+    label = Tag.build("label", for: item[:name]) { item[:name].capitalize }
+    case item[:type]
+    when :text
+      label + Tag.build("textarea", cols: "20", rows: "40", name: item[:name]) { item[:value] }
+    when :string
+      label + Tag.build("input", name: item[:name], type: "text", value: item[:value])
+    when :submit
+      Tag.build("input", name: item[:name], type: "submit", value: item[:value])
+    end
   end
 end
