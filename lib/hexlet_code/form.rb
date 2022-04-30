@@ -3,10 +3,11 @@
 module HexletCode
   # documentation comment
   class Form
-    attr_reader :user, :html
+    attr_reader :user, :attributes, :html
 
-    def initialize(user)
+    def initialize(user, attributes)
       @user = user
+      @attributes = attributes
       @html = []
     end
 

@@ -9,13 +9,15 @@ module HexletCode
 
   class Error < StandardError; end
 
-  def self.form_for(user, url: "#")
-    form = Form.new(user)
+  def self.form_for(user, **attributes)
+    form = Form.new(user, attributes)
     yield form
     inner = form.html.map do |item|
       render(item)
     end.join
-    Tag.build("form", action: url, method: "post") { inner }
+    url = form.attributes[:url] || "#"
+    tag_attributes = { action: url, method: "post" }.merge(form.attributes.except(:url))
+    Tag.build("form", **tag_attributes) { inner }
   end
 
   def self.render(item)
