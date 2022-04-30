@@ -7,28 +7,33 @@ module HexletCode
   class Error < StandardError; end
 
   def self.form_for(user, url: "#")
-    Tag.build("form", action: url, method: "post") do
-      yield(Form.new(user)) if block_given?
-    end
+    form = Form.new(user)
+    yield form
+    inner = form.html.map do |el|
+      case el[:type]
+      when :text
+        Tag.build("textarea", cols: "20", rows: "40", name: el[:name]) { el[:value] }
+      else
+        Tag.build("input", name: el[:name], type: "text", value: el[:value])
+      end
+    end.join
+
+    Tag.build("form",  action: url, method: "post") { inner }
   end
 
   # documentation comment
   class Form
-    attr_reader :user
+    attr_reader :user, :html
 
     def initialize(user)
       @user = user
-      @html = ""
+      @html = []
     end
 
     def input(name, **attributes)
       value = user.send name
-      @html += case attributes[:as]
-               when :text
-                 Tag.build("textarea", cols: "20", rows: "40", name: name) { value }
-               else
-                 Tag.build("input", name: name, type: "text", value: value)
-               end
+      type = attributes[:as] || :string
+      @html << { name: name, attributes: attributes.except(:as), type: type, value: value }
     end
   end
 
