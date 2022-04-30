@@ -12,9 +12,11 @@ module HexletCode
     inner = form.html.map do |el|
       case el[:type]
       when :text
-        Tag.build("textarea", cols: "20", rows: "40", name: el[:name]) { el[:value] }
+        Tag.build("label", for: el[:name]) { el[:name].capitalize } +
+          Tag.build("textarea", cols: "20", rows: "40", name: el[:name]) { el[:value] }
       else
-        Tag.build("input", name: el[:name], type: "text", value: el[:value])
+        Tag.build("label", for: el[:name]) { el[:name].capitalize } +
+          Tag.build("input", name: el[:name], type: "text", value: el[:value])
       end
     end.join
 
