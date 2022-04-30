@@ -1,6 +1,6 @@
 ### Hexlet tests and linter status:
-[![Actions Status](https://github.com/lev33/rails-project-lvl1/workflows//main.yml/badge.svg)](https://github.com/lev33/rails-project-lvl1/actions/workflows/main.yml)
-[![Actions Status](https://github.com/lev33/rails-project-lvl1/workflows/hexlet-check.yml/badge.svg)](https://github.com/lev33/rails-project-lvl1/actions/workflows/hexlet-check.yml)
+[![Ruby](https://github.com/lev33/rails-project-lvl1/actions/workflows/main.yml/badge.svg)](https://github.com/lev33/rails-project-lvl1/actions/workflows/main.yml)
+[![hexlet-check](https://github.com/lev33/rails-project-lvl1/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/lev33/rails-project-lvl1/actions/workflows/hexlet-check.yml)
 
 # HexletCode
 
