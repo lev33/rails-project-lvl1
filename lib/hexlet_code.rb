@@ -4,6 +4,9 @@ require_relative "hexlet_code/version"
 
 # module
 module HexletCode
+  autoload :Tag, "hexlet_code/tag.rb"
+  autoload :Form, "hexlet_code/form.rb"
+
   class Error < StandardError; end
 
   def self.form_for(user, url: "#")
@@ -22,43 +25,6 @@ module HexletCode
       end
     end.join
 
-    Tag.build("form",  action: url, method: "post") { inner }
-  end
-
-  # documentation comment
-  class Form
-    attr_reader :user, :html
-
-    def initialize(user)
-      @user = user
-      @html = []
-    end
-
-    def input(name, **attributes)
-      value = user.send name
-      type = attributes[:as] || :string
-      @html << { name: name, attributes: attributes.except(:as), type: type, value: value }
-    end
-
-    def submit(value = "Save", **attributes)
-      @html << { name: :commit, attributes: attributes, type: :submit, value: value }
-    end
-  end
-
-  # documentation comment
-  class Tag
-    def self.build(name, **attributes)
-      attributes = attributes.map do |key, value|
-        %( #{key}="#{value}")
-      end.join
-
-      if %w[br img input].include?(name)
-        %(<#{name}#{attributes}>)
-      elsif block_given?
-        %(<#{name}#{attributes}>#{yield}</#{name}>)
-      else
-        %(<#{name}#{attributes}></#{name}>)
-      end
-    end
+    Tag.build("form", action: url, method: "post") { inner }
   end
 end
