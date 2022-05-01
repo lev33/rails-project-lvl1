@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require 'test_helper'
 
 User = Struct.new(:name, :job, :gender, keyword_init: true)
 
@@ -10,9 +10,9 @@ class TestHexletCode < Minitest::Test
   end
 
   def test_it_does_something_useful
-    expected = File.read("test/fixtures/test_it_does_something_useful.html")
+    expected = File.read('test/fixtures/test_it_does_something_useful.html')
     pp expected
-    user = User.new name: "rob", job: "hexlet", gender: "m"
+    user = User.new name: 'rob', job: 'hexlet', gender: 'm'
     result = HexletCode.form_for user do |f|
       # Проверяет есть ли значение внутри name
       f.input :name
@@ -25,9 +25,9 @@ class TestHexletCode < Minitest::Test
   end
 
   def test_field_does_not_exist_error
-    user = User.new job: "hexlet"
+    user = User.new job: 'hexlet'
     assert_raises NoMethodError do
-      HexletCode.form_for user, url: "/users" do |f|
+      HexletCode.form_for user, url: '/users' do |f|
         f.input :name
         f.input :job, as: :text
         # Поля age у пользователя нет

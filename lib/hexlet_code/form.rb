@@ -17,7 +17,7 @@ module HexletCode
       @html << { name: name, attributes: attributes.except(:as), type: type, value: value }
     end
 
-    def submit(value = "Save", **attributes)
+    def submit(value = 'Save', **attributes)
       @html << { name: :commit, attributes: attributes, type: :submit, value: value }
     end
   end
