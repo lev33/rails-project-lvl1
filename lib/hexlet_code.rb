@@ -22,11 +22,13 @@ module HexletCode
 
   def self.render(item)
     label = Tag.build("label", for: item[:name]) { item[:name].capitalize }
+    attributes = item[:attributes].merge({ name: item[:name] })
     case item[:type]
     when :text
-      label + Tag.build("textarea", cols: "20", rows: "40", name: item[:name]) { item[:value] }
+      label + Tag.build("textarea", **attributes) { item[:value] }
     when :string
-      label + Tag.build("input", name: item[:name], type: "text", value: item[:value])
+      attributes = attributes.merge({ type: "text", value: item[:value] })
+      label + Tag.build("input", **attributes)
     when :submit
       Tag.build("input", name: item[:name], type: "submit", value: item[:value])
     end
