@@ -21,16 +21,18 @@ module HexletCode
   end
 
   def self.render(item)
-    label = Tag.build('label', for: item[:name]) { item[:name].capitalize }
     attributes = item[:attributes].merge({ name: item[:name] })
     case item[:type]
     when :text
-      label + Tag.build('textarea', **attributes) { item[:value] }
+      label(item) + Tag.build('textarea', **attributes) { item[:value] }
     when :string
-      attributes = attributes.merge({ type: 'text', value: item[:value] })
-      label + Tag.build('input', **attributes)
+      label(item) + Tag.build('input', **attributes, type: 'text', value: item[:value])
     when :submit
       Tag.build('input', name: item[:name], type: 'submit', value: item[:value])
     end
+  end
+
+  def self.label(item)
+    Tag.build('label', for: item[:name]) { item[:name].capitalize }
   end
 end
